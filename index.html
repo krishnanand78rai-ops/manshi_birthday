@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff7f2">
+  <meta name="description" content="A little birthday surprise made especially for Manshi.">
+  <title>For Manshi, with love ✨</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #442c3c;
+      --muted: #866c7c;
+      --rose: #d96883;
+      --rose-dark: #b94d6b;
+      --cream: #fffaf5;
+      --lavender: #eee8f8;
+      --peach: #ffe4d7;
+      --shadow: 0 24px 70px rgba(111, 63, 86, .13);
+      font-family: "Segoe UI", "Trebuchet MS", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      min-width: 320px;
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse at 8% 8%, rgba(255, 215, 210, .55), transparent 34rem),
+        radial-gradient(ellipse at 95% 48%, rgba(229, 219, 247, .65), transparent 32rem),
+        var(--cream);
+    }
+    button { font: inherit; }
+    button:focus-visible, a:focus-visible { outline: 3px solid #995071; outline-offset: 4px; }
+    .page { width: min(1050px, calc(100% - 40px)); margin: 0 auto; }
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 23px 0;
+      color: var(--muted);
+      font-size: .79rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .topline span:last-child { color: var(--rose-dark); }
+    .hero {
+      min-height: min(700px, calc(100svh - 68px));
+      display: grid;
+      place-items: center;
+      padding: 45px 0 75px;
+      text-align: center;
+    }
+    .hero-inner { width: min(720px, 100%); }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--rose-dark);
+      font-size: .77rem;
+      letter-spacing: .17em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before, .eyebrow::after { content: "✦"; font-size: .75rem; }
+    h1 {
+      margin: 19px 0 16px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(3.2rem, 10vw, 7rem);
+      font-weight: 500;
+      line-height: .96;
+      letter-spacing: -.065em;
+    }
+    h1 span { display: block; color: var(--rose); font-style: italic; }
+    .hero-copy {
+      max-width: 470px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: clamp(1rem, 2.5vw, 1.15rem);
+      line-height: 1.8;
+    }
+    .envelope-wrap { position: relative; width: 124px; height: 110px; margin: 37px auto 23px; }
+    .envelope {
+      position: absolute;
+      inset: 18px 0 0;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border: 0;
+      border-radius: 12px;
+      background: linear-gradient(145deg, #ef9caf, #db718d);
+      box-shadow: 0 13px 28px rgba(191, 82, 117, .25);
+      cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .envelope:hover { transform: translateY(-4px) rotate(-2deg); box-shadow: 0 18px 32px rgba(191, 82, 117, .3); }
+    .envelope::before, .envelope::after {
+      position: absolute;
+      bottom: 0;
+      width: 0;
+      height: 0;
+      content: "";
+      border-top: 40px solid transparent;
+    }
+    .envelope::before { left: 0; border-right: 62px solid #f5b5c3; }
+    .envelope::after { right: 0; border-left: 62px solid #f8c4ce; }
+    .envelope-heart { z-index: 1; margin-top: 4px; color: white; font-size: 2rem; }
+    .envelope-flap {
+      position: absolute;
+      z-index: 2;
+      top: 18px;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-top: 46px solid #f5b8c5;
+      border-right: 62px solid transparent;
+      border-left: 62px solid transparent;
+      pointer-events: none;
+    }
+    .tap-note { margin: 0; color: var(--muted); font-size: .84rem; }
+    .button {
+      display: inline-flex;
+      min-height: 50px;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 0 22px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--rose);
+      color: white;
+      font-weight: 700;
+      box-shadow: 0 9px 22px rgba(191, 82, 117, .2);
+      cursor: pointer;
+      transition: transform .18s ease, background .18s ease;
+    }
+    .button:hover { transform: translateY(-2px); background: var(--rose-dark); }
+    .button-secondary {
+      border: 1px solid rgba(185, 77, 107, .25);
+      background: rgba(255, 255, 255, .65);
+      color: var(--rose-dark);
+      box-shadow: none;
+    }
+    .button-secondary:hover { background: white; }
+    .letter {
+      display: none;
+      margin: 30px auto 0;
+      padding: clamp(25px, 6vw, 52px);
+      border: 1px solid rgba(217, 104, 131, .13);
+      border-radius: 26px;
+      background: rgba(255, 255, 255, .8);
+      box-shadow: var(--shadow);
+      text-align: left;
+      animation: arrive .7s both;
+    }
+    .letter.is-open { display: block; }
+    .letter-top { display: flex; justify-content: space-between; gap: 15px; color: var(--rose-dark); font-size: .78rem; letter-spacing: .11em; text-transform: uppercase; }
+    .letter h2 { margin: 25px 0 14px; font: 500 clamp(2rem, 5vw, 3.2rem)/1.1 Georgia, "Times New Roman", serif; letter-spacing: -.04em; }
+    .letter p { max-width: 670px; color: #70586a; font-size: 1rem; line-height: 1.9; }
+    .signature { margin-top: 25px; color: var(--rose-dark); font: italic 1.4rem Georgia, "Times New Roman", serif; }
+    .section { padding: 78px 0; }
+    .section-heading { max-width: 600px; margin: 0 auto 34px; text-align: center; }
+    .section-heading h2 { margin: 13px 0 10px; font: 500 clamp(2.2rem, 6vw, 3.8rem)/1.05 Georgia, "Times New Roman", serif; letter-spacing: -.05em; }
+    .section-heading p { color: var(--muted); line-height: 1.7; }
+    .wishes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .wish-card {
+      min-height: 185px;
+      padding: 25px;
+      border: 1px solid rgba(110, 75, 96, .08);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, .72);
+      box-shadow: 0 10px 32px rgba(111, 63, 86, .06);
+    }
+    .wish-icon { font-size: 1.6rem; }
+    .wish-card h3 { margin: 15px 0 7px; font: 500 1.28rem Georgia, "Times New Roman", serif; }
+    .wish-card p { margin: 0; color: var(--muted); font-size: .92rem; line-height: 1.65; }
+    .little-note {
+      position: relative;
+      overflow: hidden;
+      margin: 20px 0 80px;
+      padding: clamp(30px, 7vw, 60px);
+      border-radius: 26px;
+      background: linear-gradient(125deg, #f8dce2, #eee8f8 65%, #fff0e3);
+      text-align: center;
+    }
+    .little-note::after { position: absolute; right: 20px; bottom: -90px; content: "♡"; color: rgba(185, 77, 107, .08); font: 17rem Georgia, serif; }
+    .little-note > * { position: relative; z-index: 1; }
+    .little-note h2 { margin: 12px 0; font: 500 clamp(2rem, 5vw, 3rem) Georgia, "Times New Roman", serif; }
+    .little-note p { max-width: 550px; margin: 0 auto 24px; color: #70586a; line-height: 1.8; }
+    .footer { padding: 23px 0 32px; border-top: 1px solid rgba(110, 75, 96, .12); color: var(--muted); text-align: center; font-size: .82rem; }
+    .balloon {
+      position: fixed;
+      z-index: 1;
+      bottom: -150px;
+      width: 64px;
+      height: 140px;
+      pointer-events: none;
+      animation: balloon-rise var(--duration) ease-in var(--delay) both;
+    }
+    .balloon span {
+      position: absolute;
+      top: 0;
+      left: 4px;
+      width: 56px;
+      height: 70px;
+      border-radius: 50% 50% 46% 46%;
+      background: radial-gradient(ellipse at 32% 25%, rgba(255,255,255,.82), transparent 18%), var(--balloon-color);
+      box-shadow: inset -7px -8px 13px rgba(90, 40, 65, .12), 0 5px 16px rgba(90, 40, 65, .12);
+      animation: balloon-sway 1.8s ease-in-out infinite alternate;
+    }
+    .balloon span::after {
+      position: absolute;
+      bottom: -5px;
+      left: 24px;
+      width: 0;
+      height: 0;
+      content: "";
+      border-top: 8px solid var(--balloon-color);
+      border-right: 4px solid transparent;
+      border-left: 4px solid transparent;
+    }
+    .balloon::after {
+      position: absolute;
+      top: 73px;
+      left: 32px;
+      height: 64px;
+      content: "";
+      border-left: 1px solid rgba(100, 72, 90, .35);
+      transform: rotate(3deg);
+      transform-origin: top;
+    }
+    .balloon-one { left: 9%; --balloon-color: #ef8ca2; --duration: 7s; --delay: 0s; }
+    .balloon-two { left: 27%; --balloon-color: #b7a5e6; --duration: 8s; --delay: .35s; }
+    .balloon-three { left: 49%; --balloon-color: #f3bb76; --duration: 7.5s; --delay: .15s; }
+    .balloon-four { left: 70%; --balloon-color: #ef9e83; --duration: 8.5s; --delay: .5s; }
+    .balloon-five { left: 88%; --balloon-color: #9dcdb8; --duration: 7.8s; --delay: .25s; }
+    .confetti { position: fixed; z-index: 10; top: -18px; width: 10px; height: 14px; border-radius: 3px; pointer-events: none; animation: fall var(--fall-time) linear forwards; }
+    .toast {
+      position: fixed;
+      z-index: 12;
+      right: 20px;
+      bottom: 20px;
+      left: 20px;
+      width: fit-content;
+      max-width: calc(100% - 40px);
+      margin: auto;
+      padding: 15px 21px;
+      border-radius: 999px;
+      background: #442c3c;
+      color: white;
+      box-shadow: var(--shadow);
+      text-align: center;
+      animation: arrive .3s both;
+    }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+    @keyframes arrive { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes balloon-rise { to { transform: translate3d(35px, -125vh, 0) rotate(9deg); } }
+    @keyframes balloon-sway { from { transform: rotate(-5deg); } to { transform: rotate(5deg); } }
+    @keyframes fall { to { transform: translate3d(var(--drift), 110vh, 0) rotate(760deg); opacity: .8; } }
+    @media (max-width: 700px) {
+      .page { width: min(100% - 30px, 560px); }
+      .topline { padding: 18px 0; font-size: .68rem; }
+      .hero { min-height: auto; padding: 65px 0 50px; }
+      .wishes { grid-template-columns: 1fr; }
+      .wish-card { min-height: 0; }
+      .section { padding: 55px 0; }
+      .little-note { margin-bottom: 55px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+      .balloon { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="balloon balloon-one" aria-hidden="true"><span></span></div>
+  <div class="balloon balloon-two" aria-hidden="true"><span></span></div>
+  <div class="balloon balloon-three" aria-hidden="true"><span></span></div>
+  <div class="balloon balloon-four" aria-hidden="true"><span></span></div>
+  <div class="balloon balloon-five" aria-hidden="true"><span></span></div>
+
+  <header class="page topline">
+    <span>A little something for you</span>
+    <span>Made with ♡ for Manshi</span>
+  </header>
+
+  <main>
+    <section class="page hero" aria-labelledby="page-title">
+      <div class="hero-inner">
+        <div class="eyebrow">Today is your day</div>
+        <h1 id="page-title">Happy birthday,<span>Manshi!</span></h1>
+        <p class="hero-copy">The world got a little brighter the day you arrived. I made you a tiny corner of the internet, just to remind you how wonderfully special you are.</p>
+        <div class="envelope-wrap" id="envelope-wrap">
+          <button class="envelope" id="open-envelope" type="button" aria-label="Open your birthday letter">
+            <span class="envelope-heart" aria-hidden="true">♥</span>
+          </button>
+          <span class="envelope-flap" aria-hidden="true"></span>
+        </div>
+        <p class="tap-note" id="tap-note">There's a little birthday letter inside. Tap to open it ✨</p>
+        <article class="letter" id="birthday-letter" aria-live="polite">
+          <div class="letter-top"><span>To my favorite birthday girl</span><span>With love, always ♡</span></div>
+          <h2>Dear Manshi,</h2>
+          <p>Happy birthday to someone who makes ordinary days feel a little more lovely. I hope today brings you the kind of happiness that sneaks up on you, the laughter that makes your cheeks hurt, and all the love you so freely give to others.</p>
+          <p>May this new year bring you beautiful surprises, brave new adventures, peaceful moments, and every reason to be proud of yourself. Keep being your thoughtful, wonderful, one-of-a-kind self. The world is luckier with you in it.</p>
+          <p>Today, celebrate you—every little thing that makes you who you are. You deserve all the magic.</p>
+          <div class="signature">Happy birthday, Manshi ♡</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="page section" aria-labelledby="wishes-title">
+      <div class="section-heading">
+        <div class="eyebrow">A few wishes for your year</div>
+        <h2 id="wishes-title">A whole year of wonderful</h2>
+        <p>Because one birthday wish could never hold all the good things I hope find their way to you.</p>
+      </div>
+      <div class="wishes">
+        <article class="wish-card">
+          <div class="wish-icon" aria-hidden="true">✨</div>
+          <h3>Little everyday magic</h3>
+          <p>More small joys, unexpected smiles, and moments that make you think, “This is a good day.”</p>
+        </article>
+        <article class="wish-card">
+          <div class="wish-icon" aria-hidden="true">🌷</div>
+          <h3>Room to bloom</h3>
+          <p>New adventures, dreams coming closer, and the confidence to become everything you want to be.</p>
+        </article>
+        <article class="wish-card">
+          <div class="wish-icon" aria-hidden="true">💌</div>
+          <h3>All the love</h3>
+          <p>People who show up for you, laughter you can share, and reminders of how deeply you are appreciated.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="page little-note" aria-labelledby="note-title">
+      <div class="eyebrow">One last thing</div>
+      <h2 id="note-title">Make a wish, Manshi 🌟</h2>
+      <p>Close your eyes for a second, think of something that makes your heart happy, and let this be your reminder: you deserve good things—not just today, but every day.</p>
+      <button class="button" id="wish-button" type="button">Send a little birthday magic <span aria-hidden="true">✦</span></button>
+    </section>
+  </main>
+
+  <footer class="page footer">Made especially for you, Manshi. Happy birthday! ♡</footer>
+  <div class="sr-only" id="announcement" aria-live="polite"></div>
+
+  <script>
+    const openButton = document.querySelector("#open-envelope");
+    const letter = document.querySelector("#birthday-letter");
+    const tapNote = document.querySelector("#tap-note");
+    const wishButton = document.querySelector("#wish-button");
+    const announcement = document.querySelector("#announcement");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    function celebrate() {
+      if (reduceMotion.matches) return;
+
+      const colors = ["#d96883", "#f4bd63", "#a99bd8", "#86bfa7", "#f3a98b"];
+      const fragment = document.createDocumentFragment();
+      for (let index = 0; index < 70; index += 1) {
+        const piece = document.createElement("span");
+        piece.className = "confetti";
+        piece.setAttribute("aria-hidden", "true");
+        piece.style.left = `${Math.random() * 100}vw`;
+        piece.style.backgroundColor = colors[index % colors.length];
+        piece.style.setProperty("--fall-time", `${2.5 + Math.random() * 2.5}s`);
+        piece.style.setProperty("--drift", `${Math.random() * 180 - 90}px`);
+        fragment.append(piece);
+        window.setTimeout(() => piece.remove(), 5200);
+      }
+      document.body.append(fragment);
+    }
+
+    openButton.addEventListener("click", () => {
+      letter.classList.add("is-open");
+      openButton.setAttribute("aria-expanded", "true");
+      openButton.setAttribute("aria-label", "Birthday letter opened");
+      tapNote.textContent = "A little love, just for you ♡";
+      document.querySelector("#envelope-wrap").hidden = true;
+      announcement.textContent = "Your birthday letter is open. Happy birthday, Manshi!";
+      celebrate();
+      letter.scrollIntoView({ behavior: reduceMotion.matches ? "auto" : "smooth", block: "center" });
+    });
+
+    wishButton.addEventListener("click", () => {
+      celebrate();
+      const toast = document.createElement("div");
+      toast.className = "toast";
+      toast.setAttribute("role", "status");
+      toast.textContent = "Wish sent! May your year be full of magic, Manshi ✨";
+      document.body.append(toast);
+      window.setTimeout(() => toast.remove(), 4000);
+    });
+  </script>
+</body>
+</html>
